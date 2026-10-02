@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: dlrms-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dlrms-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: https://lsglandownerland.github.io
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: BKASH_NUMBER
+        value: "01833013604"
+      - key: PRINT_PRICE
+        value: "10"
+databases:
+  - name: dlrms-db
+    plan: free

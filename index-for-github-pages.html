@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>খতিয়ান তথ্য ব্যবস্থাপনা — ডেমো</title>
+<style>
+:root{--g:#166534;--g2:#15803d;--light:#f0fdf4;--line:#d1d5db;--danger:#dc2626;--blue:#2563eb;--amber:#d97706;--text:#17202a}
+*{box-sizing:border-box}body{margin:0;background:#f3f6f4;color:var(--text);font-family:"Noto Sans Bengali","SolaimanLipi",Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#e9f7ee,#f7faf8)}
+.login-card{width:min(430px,100%);background:#fff;border:1px solid #cde3d3;border-radius:18px;padding:28px;box-shadow:0 18px 50px #00000012}.brand{text-align:center}.brand img{width:74px;height:74px;object-fit:contain}.brand h1{font-size:22px;margin:10px 0 4px;color:var(--g)}.muted{color:#64748b;font-size:13px}
+.field{margin:12px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px 11px;background:#fff;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--g2);box-shadow:0 0 0 3px #16a34a18}
+.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:700;color:#fff;background:var(--g)}.btn:hover{filter:brightness(.96)}.btn.full{width:100%}.btn.secondary{background:#475569}.btn.blue{background:var(--blue)}.btn.red{background:var(--danger)}.btn.amber{background:var(--amber);color:#fff}.btn.light{background:#e2e8f0;color:#17202a}.btn.small{padding:7px 10px;font-size:12px}
+.alert{padding:10px 12px;border-radius:9px;margin:10px 0;font-size:13px}.alert.warn{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}.alert.ok{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e2e8f0}.topbar{max-width:1250px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:12px}.topbar img{width:42px;height:42px;object-fit:contain}.topbar .title{flex:1}.topbar h2{font-size:18px;margin:0;color:var(--g)}.topbar small{color:#64748b}.wallet{background:var(--light);color:var(--g);border:1px solid #bbf7d0;padding:7px 11px;border-radius:20px;font-weight:700;font-size:13px}.container{max-width:1250px;margin:20px auto;padding:0 14px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px;box-shadow:0 5px 18px #00000008}.card h3{margin:0 0 14px;color:var(--g);font-size:17px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.full{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.table-wrap{overflow:auto}.data-table{width:100%;border-collapse:collapse;font-size:13px}.data-table th,.data-table td{border:1px solid #dbe1e6;padding:8px;text-align:center;vertical-align:middle}.data-table th{background:#f1f5f9}.search{display:flex;gap:8px;margin-bottom:10px}.search input{flex:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.stat{padding:14px;border-radius:12px;background:#fff;border:1px solid #e2e8f0}.stat b{display:block;font-size:22px;color:var(--g)}.stat span{font-size:12px;color:#64748b}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.section-title h3{margin:0}.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#dcfce7;color:#166534;font-size:11px;font-weight:700}
+#app{min-height:100vh}.print-area{max-width:1120px;margin:20px auto;background:#fff;border:1px solid #777;padding:20px}.doc-head{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;text-align:center}.doc-head img{width:72px;height:72px;object-fit:contain}.doc-title{font-size:22px;font-weight:800}.doc-sub{font-size:13px;margin-top:4px}.meta{width:100%;border-collapse:collapse;margin:14px 0}.meta td{padding:5px 8px;border:1px solid #777}.k-table{width:100%;border-collapse:collapse;font-size:12px}.k-table th,.k-table td{border:1px solid #222;padding:5px;text-align:center;vertical-align:top}.k-table th{background:#fafafa}.doc-foot{display:flex;justify-content:space-between;align-items:end;margin-top:18px}.seal{width:110px;height:110px;border:2px solid #166534;border-radius:50%;display:grid;place-items:center;text-align:center;color:#166534;font-weight:800;font-size:12px}.qr{width:90px;height:90px}.verify{max-width:520px;margin:25px auto;background:#fff;border-radius:16px;border:1px solid #dbe4dc;overflow:hidden;box-shadow:0 10px 30px #0001}.verify-head{background:#166534;color:#fff;text-align:center;padding:20px}.verify-body{padding:20px}.verify-row{display:grid;grid-template-columns:140px 1fr;border-bottom:1px dashed #d1d5db;padding:9px 0}.verify-row b{color:#334155}.note{font-size:12px;color:#64748b;line-height:1.7}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.topbar .wallet{display:none}.doc-head{grid-template-columns:60px 1fr 60px}.doc-title{font-size:17px}.print-area{margin:8px;padding:10px}.k-table{font-size:10px}}
+@media print{body{background:#fff}.no-print,header,.actions,.print-tools{display:none!important}.print-area{border:0;margin:0;max-width:none;box-shadow:none;padding:0}.k-table{font-size:11px}@page{size:A4 landscape;margin:10mm}}
+</style>
+</head>
+<body>
+<div id="loginView" class="login-wrap">
+  <div class="login-card">
+    <div class="brand"><img src="logo.png" onerror="this.style.display='none'" alt="Logo"><h1>খতিয়ান তথ্য ব্যবস্থাপনা</h1><div class="muted">অনলাইন ব্যবস্থাপনা ও যাচাইকরণ — ডেমো</div></div>
+    <div class="alert warn">এটি frontend demo। বাস্তব ব্যবহারের আগে server-side authentication ও database যোগ করুন।</div>
+    <form id="loginForm"><div class="field"><label>ইউজারনেম</label><input id="loginUser" required autocomplete="username"></div><div class="field"><label>পাসওয়ার্ড</label><input id="loginPass" type="password" required autocomplete="current-password"></div><button class="btn full">লগইন</button></form>
+    <p class="note">ডেমো লগইন: <b>admin</b> / <b>12345</b></p>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<header><div class="topbar"><img src="logo.png" onerror="this.style.display='none'" alt="Logo"><div class="title"><h2>খতিয়ান তথ্য ব্যবস্থাপনা</h2><small id="userInfo"></small></div><div class="wallet">ব্যালেন্স: ৳<span id="balance">0</span></div><button class="btn red small" id="logoutBtn">লগআউট</button></div></header>
+<main class="container">
+  <div class="stats"><div class="stat"><b id="statTotal">0</b><span>মোট খতিয়ান</span></div><div class="stat"><b id="statMine">0</b><span>আমার তৈরি</span></div><div class="stat"><b id="statBalance">৳0</b><span>বর্তমান ব্যালেন্স</span></div></div>
+  <div class="grid">
+    <section class="card"><div class="section-title"><h3>খতিয়ান তৈরি / সম্পাদনা</h3><span class="badge" id="formMode">নতুন</span></div>
+      <form id="khatianForm"><input type="hidden" id="editId">
+      <div class="form-grid">
+        <div class="field"><label>খতিয়ান নং *</label><input id="khatianNo" required></div>
+        <div class="field"><label>জেলা *</label><input id="district" required></div>
+        <div class="field"><label>উপজেলা/থানা</label><input id="upazila"></div>
+        <div class="field"><label>মৌজা</label><input id="mouza"></div>
+        <div class="field"><label>জে.এল. নং</label><input id="jlNo"></div>
+        <div class="field"><label>রেকর্ডের ধরন</label><select id="recordType"><option>বি.আর.এস</option><option>এস.এ</option><option>আর.এস</option><option>সি.এস</option></select></div>
+        <div class="field full"><label>মালিকের নাম *</label><input id="owner" required></div>
+        <div class="field full"><label>অভিভাবক/স্বামী</label><input id="guardian"></div>
+        <div class="field"><label>দাগ নং</label><input id="dag"></div>
+        <div class="field"><label>জমির শ্রেণি</label><input id="landClass" value="ভিটি"></div>
+        <div class="field"><label>জমির পরিমাণ</label><input id="landAmount" placeholder="যেমন: 0.01000 শতাংশ"></div>
+        <div class="field"><label>ঠিকানা</label><input id="address"></div>
+        <div class="field full"><label>মন্তব্য</label><textarea id="remarks" rows="3"></textarea></div>
+      </div>
+      <div class="actions"><button class="btn" type="submit">সংরক্ষণ</button><button class="btn secondary" type="button" id="resetBtn">ফর্ম পরিষ্কার</button></div>
+      </form>
+    </section>
+    <aside class="card"><div class="section-title"><h3>রিচার্জ / অ্যাকাউন্ট</h3></div>
+      <div class="alert ok">প্রতি PDF/Print download-এ ডেমো হিসেবে ৳১০ কাটা হবে।</div>
+      <div class="field"><label>রিচার্জের পরিমাণ</label><input id="rechargeAmount" type="number" min="10" step="10" value="100"></div>
+      <div class="field"><label>বিকাশ TXN ID</label><input id="txnId" placeholder="TXN123456"></div>
+      <button class="btn full" id="rechargeBtn">রিচার্জ অনুরোধ</button>
+      <hr style="border:0;border-top:1px solid #e5e7eb;margin:18px 0">
+      <div id="adminBox" class="hidden"><h3>Master Admin</h3><div class="field"><label>নতুন সাব-অ্যাডমিন ইউজার</label><input id="newUser"></div><div class="field"><label>পাসওয়ার্ড</label><input id="newPass" type="password"></div><button class="btn full" id="addAdminBtn">Sub-admin তৈরি</button><div class="table-wrap" style="margin-top:12px"><table class="data-table" id="adminTable"></table></div></div>
+    </aside>
+  </div>
+  <section class="card" style="margin-top:16px"><div class="section-title"><h3>সংরক্ষিত খতিয়ান</h3></div><div class="search"><input id="searchBox" placeholder="খতিয়ান, মালিক, দাগ বা জেলা দিয়ে খুঁজুন"><button class="btn light" id="clearSearch">পরিষ্কার</button></div><div class="table-wrap"><table class="data-table"><thead><tr><th>খতিয়ান</th><th>মালিক</th><th>দাগ</th><th>জেলা</th><th>রেকর্ড</th><th>তারিখ</th><th>কাজ</th></tr></thead><tbody id="recordBody"></tbody></table></div></section>
+</main>
+</div>
+
+<div id="printView" class="hidden"><div class="print-tools no-print" style="padding:12px;text-align:center"><button class="btn" id="printBtn">প্রিন্ট / PDF</button> <button class="btn secondary" id="backBtn">ফিরে যান</button></div><div id="printArea" class="print-area"></div></div>
+<div id="verifyView" class="hidden"></div>
+
+<script>
+'use strict';
+const KEY={records:'dlrms_records_v2',users:'dlrms_users_v2',balance:'dlrms_balance_v2',recharges:'dlrms_recharges_v2'};
+const $=id=>document.getElementById(id);
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const set=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let users=get(KEY.users,[{username:'admin',password:'12345',role:'master'}]);
+let records=get(KEY.records,[]), recharges=get(KEY.recharges,[]), balance=Number(localStorage.getItem(KEY.balance)||0), currentUser=null;
+function esc(v){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function fmtDate(v){return new Date(v).toLocaleDateString('bn-BD',{year:'numeric',month:'2-digit',day:'2-digit'})}
+function saveAll(){set(KEY.records,records);set(KEY.users,users);set(KEY.recharges,recharges);localStorage.setItem(KEY.balance,String(balance));}
+function show(id){['loginView','app','printView','verifyView'].forEach(x=>$(x).classList.add('hidden'));$(id).classList.remove('hidden')}
+function render(){
+ $('userInfo').textContent=`${currentUser.username} — ${currentUser.role==='master'?'Master Admin':'Sub-admin'}`;
+ $('balance').textContent=balance.toLocaleString('bn-BD');$('statBalance').textContent='৳'+balance.toLocaleString('bn-BD');
+ $('statTotal').textContent=records.length.toLocaleString('bn-BD');$('statMine').textContent=records.filter(r=>r.createdBy===currentUser.username).length.toLocaleString('bn-BD');
+ $('adminBox').classList.toggle('hidden',currentUser.role!=='master');renderRecords();if(currentUser.role==='master')renderAdmins();
+}
+function renderRecords(){let q=$('searchBox').value.trim().toLowerCase();let rows=records.filter(r=>!q||[r.khatianNo,r.owner,r.dag,r.district,r.recordType].join(' ').toLowerCase().includes(q));$('recordBody').innerHTML=rows.map(r=>`<tr><td>${esc(r.khatianNo)}</td><td>${esc(r.owner)}</td><td>${esc(r.dag)}</td><td>${esc(r.district)}</td><td>${esc(r.recordType)}</td><td>${fmtDate(r.createdAt)}</td><td><button class="btn small blue" onclick="editRecord('${r.id}')">Edit</button> <button class="btn small" onclick="openPrint('${r.id}')">Print</button> <button class="btn small red" onclick="deleteRecord('${r.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan="7">কোনো রেকর্ড পাওয়া যায়নি</td></tr>'}
+function renderAdmins(){let others=users.filter(u=>u.role!=='master');$('adminTable').innerHTML='<tr><th>ইউজার</th><th>রোল</th><th>কাজ</th></tr>'+others.map(u=>`<tr><td>${esc(u.username)}</td><td>Sub-admin</td><td><button class="btn small red" onclick="removeAdmin('${esc(u.username)}')">মুছুন</button></td></tr>`).join('')}
+function resetForm(){ $('khatianForm').reset();$('editId').value='';$('recordType').value='বি.আর.এস';$('landClass').value='ভিটি';$('formMode').textContent='নতুন'}
+$('loginForm').addEventListener('submit',e=>{e.preventDefault();let u=users.find(x=>x.username===$('loginUser').value.trim()&&x.password===$('loginPass').value);if(!u)return alert('ইউজারনেম বা পাসওয়ার্ড ভুল।');currentUser={...u};show('app');render();});
+$('logoutBtn').onclick=()=>{currentUser=null;show('loginView');$('loginForm').reset()};$('resetBtn').onclick=resetForm;$('searchBox').oninput=renderRecords;$('clearSearch').onclick=()=>{$('searchBox').value='';renderRecords()};
+$('khatianForm').addEventListener('submit',e=>{e.preventDefault();let id=$('editId').value;let obj={id:id||uid(),khatianNo:$('khatianNo').value.trim(),district:$('district').value.trim(),upazila:$('upazila').value.trim(),mouza:$('mouza').value.trim(),jlNo:$('jlNo').value.trim(),recordType:$('recordType').value,owner:$('owner').value.trim(),guardian:$('guardian').value.trim(),dag:$('dag').value.trim(),landClass:$('landClass').value.trim(),landAmount:$('landAmount').value.trim(),address:$('address').value.trim(),remarks:$('remarks').value.trim(),createdBy:currentUser.username,createdAt:Date.now()};if(id){let old=records.find(r=>r.id===id);if(old)obj.createdAt=old.createdAt;records=records.map(r=>r.id===id?{...old,...obj}:r)}else records.unshift(obj);saveAll();resetForm();render();alert(id?'খতিয়ান আপডেট হয়েছে।':'খতিয়ান সংরক্ষণ হয়েছে।')});
+window.editRecord=id=>{let r=records.find(x=>x.id===id);if(!r)return;Object.keys(r).forEach(k=>{let el=$(k);if(el)el.value=r[k]??''});$('editId').value=r.id;$('formMode').textContent='সম্পাদনা';scrollTo({top:0,behavior:'smooth'})};
+window.deleteRecord=id=>{if(currentUser.role!=='master'&&records.find(r=>r.id===id)?.createdBy!==currentUser.username)return alert('এই রেকর্ড মুছতে আপনার অনুমতি নেই।');if(confirm('এই খতিয়ানটি মুছে ফেলবেন?')){records=records.filter(r=>r.id!==id);saveAll();render()}};
+$('addAdminBtn').onclick=()=>{let u=$('newUser').value.trim(),p=$('newPass').value;if(!u||!p)return alert('ইউজারনেম ও পাসওয়ার্ড দিন।');if(users.some(x=>x.username===u))return alert('এই ইউজার আগে থেকেই আছে।');users.push({username:u,password:p,role:'sub'});saveAll();$('newUser').value='';$('newPass').value='';renderAdmins();alert('Sub-admin তৈরি হয়েছে।')};
+window.removeAdmin=u=>{if(!confirm('Sub-admin মুছে ফেলবেন?'))return;users=users.filter(x=>x.username!==u);saveAll();renderAdmins()};
+$('rechargeBtn').onclick=()=>{let amount=Number($('rechargeAmount').value),txn=$('txnId').value.trim();if(!amount||amount<10||!txn)return alert('পরিমাণ ও TXN ID দিন।');recharges.unshift({id:uid(),user:currentUser.username,amount,txn,status:'pending',at:Date.now()});saveAll();$('txnId').value='';alert('রিচার্জ অনুরোধ সংরক্ষণ হয়েছে। Master Admin অনুমোদন করলে ব্যালেন্স যোগ হবে।')};
+function makeQR(url){return `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`}
+window.openPrint=id=>{let r=records.find(x=>x.id===id);if(!r)return;let url=location.href.split('#')[0]+'#verify='+encodeURIComponent(r.id);$('printArea').innerHTML=`<div class="doc-head"><img src="logo.png" onerror="this.style.visibility='hidden'" alt="Logo"><div><div class="doc-title">খতিয়ান তথ্য</div><div class="doc-sub">${esc(r.recordType)} রেকর্ড — ডেমো কপি</div></div><div>পৃষ্ঠা-১</div></div><table class="meta"><tr><td><b>খতিয়ান নং:</b> ${esc(r.khatianNo)}</td><td><b>জেলা:</b> ${esc(r.district)}</td><td><b>উপজেলা:</b> ${esc(r.upazila)}</td></tr><tr><td><b>মৌজা:</b> ${esc(r.mouza)}</td><td><b>জে.এল. নং:</b> ${esc(r.jlNo)}</td><td><b>রেকর্ড:</b> ${esc(r.recordType)}</td></tr></table><table class="k-table"><thead><tr><th>মালিকের নাম</th><th>অভিভাবক/স্বামী</th><th>দাগ নং</th><th>জমির শ্রেণি</th><th>জমির পরিমাণ</th><th>ঠিকানা</th></tr></thead><tbody><tr><td>${esc(r.owner)}</td><td>${esc(r.guardian)}</td><td>${esc(r.dag)}</td><td>${esc(r.landClass)}</td><td>${esc(r.landAmount)}</td><td>${esc(r.address)}</td></tr></tbody></table><div style="margin-top:12px"><b>মন্তব্য:</b> ${esc(r.remarks)||'—'}</div><div class="doc-foot"><div><div class="seal">খতিয়ান<br>সেবা<br>ডেমো</div><div style="text-align:center;font-size:11px;margin-top:5px">অনুমোদিত সিল</div></div><div style="text-align:center"><img class="qr" src="${makeQR(url)}" alt="QR"><div style="font-size:10px">QR স্ক্যান করে যাচাই</div></div></div><div style="margin-top:12px;font-size:10px;text-align:center;color:#555">মুদ্রণ: খতিয়ান সেবা ডেমো | তৈরি: ${fmtDate(r.createdAt)}</div>`;show('printView')};
+$('printBtn').onclick=()=>{if(balance<10)return alert('PDF/Print ব্যবহারের জন্য পর্যাপ্ত ব্যালেন্স নেই।');balance-=10;saveAll();window.print();render()};$('backBtn').onclick=()=>{show('app');render()};
+function verify(id){let r=records.find(x=>x.id===id);if(!r){$('verifyView').innerHTML='<div class="verify"><div class="verify-head"><h2>যাচাই ফলাফল</h2></div><div class="verify-body">রেকর্ড পাওয়া যায়নি।</div></div>';show('verifyView');return}let rows=[['খতিয়ান নং',r.khatianNo],['রেকর্ড',r.recordType],['জেলা',r.district],['উপজেলা',r.upazila],['মৌজা',r.mouza],['মালিক',r.owner],['দাগ নং',r.dag],['জমির শ্রেণি',r.landClass],['পরিমাণ',r.landAmount]];$('verifyView').innerHTML=`<div class="verify"><div class="verify-head"><h2 style="margin:0">খতিয়ান যাচাই</h2><div style="font-size:12px;margin-top:5px">ডেমো যাচাইকরণ পেজ</div></div><div class="verify-body">${rows.map(x=>`<div class="verify-row"><b>${esc(x[0])}</b><span>${esc(x[1])||'—'}</span></div>`).join('')}<div class="alert ok" style="margin-top:16px">এই রেকর্ডটি বর্তমান browser-এর সংরক্ষিত demo data থেকে দেখানো হচ্ছে।</div><button class="btn full" onclick="location.hash='';show('loginView')">লগইন পেজে যান</button></div></div>`;show('verifyView')}
+function route(){let m=location.hash.match(/^#verify=(.+)$/);if(m){verify(decodeURIComponent(m[1]));return}show(currentUser?'app':'loginView')}
+window.addEventListener('hashchange',route);route();
+</script>
+</body></html>
